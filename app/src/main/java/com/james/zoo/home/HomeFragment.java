@@ -49,6 +49,12 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
     public void showAreaUi() {
         Intent intent = new Intent(getContext(), AreaActivity.class);
         startActivity(intent);

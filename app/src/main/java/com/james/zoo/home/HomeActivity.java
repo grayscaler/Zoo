@@ -3,6 +3,8 @@ package com.james.zoo.home;
 import android.os.Bundle;
 
 import com.james.zoo.R;
+import com.james.zoo.data.source.ZooRepository;
+import com.james.zoo.data.source.remote.ZooRemoteDataSource;
 import com.james.zoo.util.ActivityUtils;
 
 import androidx.appcompat.app.ActionBar;
@@ -32,6 +34,6 @@ public class HomeActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), homeFragment, R.id.contentFrame);
         }
 
-        mHomePresenter = new HomePresenter(homeFragment);
+        mHomePresenter = new HomePresenter(homeFragment, ZooRepository.getInstance(ZooRemoteDataSource.getInstance()));
     }
 }

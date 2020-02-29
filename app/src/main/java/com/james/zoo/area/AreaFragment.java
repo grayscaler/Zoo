@@ -49,6 +49,12 @@ public class AreaFragment extends Fragment implements AreaContract.View {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start("");
+    }
+
+    @Override
     public void showPlantUi() {
         Intent intent = new Intent(getContext(), PlantActivity.class);
         startActivity(intent);

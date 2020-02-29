@@ -7,6 +7,8 @@ public interface AreaContract {
 
     interface Presenter extends BasePresenter {
 
+        void start(String area);
+
         void openPlant();
     }
 
