@@ -28,7 +28,7 @@ public class HomePresenter implements HomeContract.Presenter {
         mZooRepository.getAreas(new ZooDataSource.GetAreasCallback() {
             @Override
             public void onAreaLoaded(List<Area.ResultBean.ResultsBean> areas) {
-
+                mView.showAreas(areas);
             }
 
             @Override
@@ -39,7 +39,7 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void openArea() {
-        mView.showAreaUi();
+    public void openAreaDetail(Area.ResultBean.ResultsBean clickedArea) {
+        mView.showAreaDetail(clickedArea);
     }
 }

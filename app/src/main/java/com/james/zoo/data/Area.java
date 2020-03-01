@@ -1,5 +1,8 @@
 package com.james.zoo.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 public class Area {
@@ -73,7 +76,7 @@ public class Area {
             this.results = results;
         }
 
-        public static class ResultsBean {
+        public static class ResultsBean implements Parcelable {
             /**
              * E_Pic_URL : http://www.zoo.gov.tw/iTAP/05_Exhibit/01_FormosanAnimal.jpg
              * E_Geo : MULTIPOINT ((121.5805931 24.9985962))
@@ -95,6 +98,30 @@ public class Area {
             private String E_Memo;
             private int _id;
             private String E_URL;
+
+            protected ResultsBean(Parcel in) {
+                E_Pic_URL = in.readString();
+                E_Geo = in.readString();
+                E_Info = in.readString();
+                E_no = in.readString();
+                E_Category = in.readString();
+                E_Name = in.readString();
+                E_Memo = in.readString();
+                _id = in.readInt();
+                E_URL = in.readString();
+            }
+
+            public static final Creator<ResultsBean> CREATOR = new Creator<ResultsBean>() {
+                @Override
+                public ResultsBean createFromParcel(Parcel in) {
+                    return new ResultsBean(in);
+                }
+
+                @Override
+                public ResultsBean[] newArray(int size) {
+                    return new ResultsBean[size];
+                }
+            };
 
             public String getE_Pic_URL() {
                 return E_Pic_URL;
@@ -166,6 +193,24 @@ public class Area {
 
             public void setE_URL(String E_URL) {
                 this.E_URL = E_URL;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel parcel, int i) {
+                parcel.writeString(E_Pic_URL);
+                parcel.writeString(E_Geo);
+                parcel.writeString(E_Info);
+                parcel.writeString(E_no);
+                parcel.writeString(E_Category);
+                parcel.writeString(E_Name);
+                parcel.writeString(E_Memo);
+                parcel.writeInt(_id);
+                parcel.writeString(E_URL);
             }
         }
     }

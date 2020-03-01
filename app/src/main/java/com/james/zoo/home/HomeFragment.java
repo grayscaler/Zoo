@@ -5,20 +5,29 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.james.zoo.R;
+import com.james.zoo.adapter.AreaAdapter;
 import com.james.zoo.area.AreaActivity;
+import com.james.zoo.data.Area;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import static com.james.zoo.Constants.Constants.OBJECT_AREA;
 
 public class HomeFragment extends Fragment implements HomeContract.View {
 
     private HomeContract.Presenter mPresenter;
 
-    private Button button;
+    private AreaAdapter mAreaAdapter;
 
     public HomeFragment() {
     }
@@ -32,18 +41,21 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mPresenter = presenter;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAreaAdapter = new AreaAdapter(new ArrayList<Area.ResultBean.ResultsBean>(0), mAreaItemListener);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.home_frag, container, false);
 
-        button = root.findViewById(R.id.btn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.openArea();
-            }
-        });
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mAreaAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         return root;
     }
@@ -54,9 +66,28 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mPresenter.start();
     }
 
+    AreaItemListener mAreaItemListener = new AreaItemListener() {
+        @Override
+        public void onAreaClick(Area.ResultBean.ResultsBean clickedArea) {
+            mPresenter.openAreaDetail(clickedArea);
+        }
+    };
+
     @Override
-    public void showAreaUi() {
+    public void showAreas(List<Area.ResultBean.ResultsBean> areas) {
+        mAreaAdapter.replaceData(areas);
+    }
+
+    @Override
+    public void showAreaDetail(Area.ResultBean.ResultsBean clickedArea) {
         Intent intent = new Intent(getContext(), AreaActivity.class);
+        intent.putExtra(OBJECT_AREA, clickedArea);
         startActivity(intent);
+    }
+
+    public interface AreaItemListener {
+
+        void onAreaClick(Area.ResultBean.ResultsBean clickedArea);
+
     }
 }
