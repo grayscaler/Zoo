@@ -36,6 +36,9 @@ public class AreaActivity extends AppCompatActivity {
         AreaFragment areaFragment = (AreaFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (areaFragment == null) {
             areaFragment = AreaFragment.newInstance();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(OBJECT_AREA, area);
+            areaFragment.setArguments(bundle);
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), areaFragment, R.id.contentFrame);
         }
 
