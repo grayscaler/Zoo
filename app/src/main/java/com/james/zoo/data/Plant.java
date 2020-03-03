@@ -1,5 +1,8 @@
 package com.james.zoo.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -75,7 +78,7 @@ public class Plant {
             this.results = results;
         }
 
-        public static class ResultsBean {
+        public static class ResultsBean implements Parcelable {
             /**
              * F_Name_Latin : Lagerstroemia subcostata
              * F_pdf02_ALT :
@@ -159,6 +162,59 @@ public class Plant {
             private String F_Voice03_URL;
             private String F_Update;
             private int _id;
+
+            protected ResultsBean(Parcel in) {
+                F_Name_Latin = in.readString();
+                F_pdf02_ALT = in.readString();
+                F_Location = in.readString();
+                F_pdf01_ALT = in.readString();
+                rank = in.readDouble();
+                F_Summary = in.readString();
+                F_Pic01_URL = in.readString();
+                _full_count = in.readString();
+                F_pdf02_URL = in.readString();
+                F_Pic02_URL = in.readString();
+                F_Keywords = in.readString();
+                F_Code = in.readString();
+                F_Geo = in.readString();
+                F_Pic03_URL = in.readString();
+                F_Voice01_ALT = in.readString();
+                F_AlsoKnown = in.readString();
+                F_Voice02_ALT = in.readString();
+                F_Name_Ch = in.readString();
+                F_Pic04_ALT = in.readString();
+                F_Name_En = in.readString();
+                F_Brief = in.readString();
+                F_Pic04_URL = in.readString();
+                F_Voice01_URL = in.readString();
+                F_Feature = in.readString();
+                F_Pic02_ALT = in.readString();
+                F_Family = in.readString();
+                F_Voice03_ALT = in.readString();
+                F_Voice02_URL = in.readString();
+                F_Pic03_ALT = in.readString();
+                F_Pic01_ALT = in.readString();
+                F_CID = in.readString();
+                F_pdf01_URL = in.readString();
+                F_Vedio_URL = in.readString();
+                F_Genus = in.readString();
+                _$F_FunctionApplication295 = in.readString();
+                F_Voice03_URL = in.readString();
+                F_Update = in.readString();
+                _id = in.readInt();
+            }
+
+            public static final Creator<ResultsBean> CREATOR = new Creator<ResultsBean>() {
+                @Override
+                public ResultsBean createFromParcel(Parcel in) {
+                    return new ResultsBean(in);
+                }
+
+                @Override
+                public ResultsBean[] newArray(int size) {
+                    return new ResultsBean[size];
+                }
+            };
 
             public String getF_Name_Latin() {
                 return F_Name_Latin;
@@ -462,6 +518,53 @@ public class Plant {
 
             public void set_id(int _id) {
                 this._id = _id;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel parcel, int i) {
+                parcel.writeString(F_Name_Latin);
+                parcel.writeString(F_pdf02_ALT);
+                parcel.writeString(F_Location);
+                parcel.writeString(F_pdf01_ALT);
+                parcel.writeDouble(rank);
+                parcel.writeString(F_Summary);
+                parcel.writeString(F_Pic01_URL);
+                parcel.writeString(_full_count);
+                parcel.writeString(F_pdf02_URL);
+                parcel.writeString(F_Pic02_URL);
+                parcel.writeString(F_Keywords);
+                parcel.writeString(F_Code);
+                parcel.writeString(F_Geo);
+                parcel.writeString(F_Pic03_URL);
+                parcel.writeString(F_Voice01_ALT);
+                parcel.writeString(F_AlsoKnown);
+                parcel.writeString(F_Voice02_ALT);
+                parcel.writeString(F_Name_Ch);
+                parcel.writeString(F_Pic04_ALT);
+                parcel.writeString(F_Name_En);
+                parcel.writeString(F_Brief);
+                parcel.writeString(F_Pic04_URL);
+                parcel.writeString(F_Voice01_URL);
+                parcel.writeString(F_Feature);
+                parcel.writeString(F_Pic02_ALT);
+                parcel.writeString(F_Family);
+                parcel.writeString(F_Voice03_ALT);
+                parcel.writeString(F_Voice02_URL);
+                parcel.writeString(F_Pic03_ALT);
+                parcel.writeString(F_Pic01_ALT);
+                parcel.writeString(F_CID);
+                parcel.writeString(F_pdf01_URL);
+                parcel.writeString(F_Vedio_URL);
+                parcel.writeString(F_Genus);
+                parcel.writeString(_$F_FunctionApplication295);
+                parcel.writeString(F_Voice03_URL);
+                parcel.writeString(F_Update);
+                parcel.writeInt(_id);
             }
         }
     }

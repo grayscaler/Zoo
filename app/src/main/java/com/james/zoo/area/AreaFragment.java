@@ -12,28 +12,34 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.james.zoo.R;
+import com.james.zoo.adapter.PlantAdapter;
 import com.james.zoo.data.Area;
+import com.james.zoo.data.Plant;
 import com.james.zoo.plant.PlantActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.james.zoo.Constants.Constants.OBJECT_AREA;
+import static com.james.zoo.Constants.Constants.OBJECT_PLANT;
 
 public class AreaFragment extends Fragment implements AreaContract.View {
 
     private AreaContract.Presenter mPresenter;
-
-    private Area.ResultBean.ResultsBean area;
 
     private ImageView imageView;
     private TextView info;
     private TextView location;
     private TextView memo;
     private TextView web;
-    private RecyclerView recyclerView;
+
+    private PlantAdapter mPlantAdapter;
 
     public AreaFragment() {
     }
@@ -50,7 +56,7 @@ public class AreaFragment extends Fragment implements AreaContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        area = getArguments().getParcelable(OBJECT_AREA);
+        mPlantAdapter = new PlantAdapter(new ArrayList<Plant.ResultBean.ResultsBean>(0), mPlantItemListener);
     }
 
     @Nullable
@@ -63,8 +69,23 @@ public class AreaFragment extends Fragment implements AreaContract.View {
         location = root.findViewById(R.id.location);
         memo = root.findViewById(R.id.memo);
         web = root.findViewById(R.id.web);
-        recyclerView = root.findViewById(R.id.recycler_view);
 
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mPlantAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
+    public void setView(Area.ResultBean.ResultsBean area) {
         Glide.with(this)
                 .load(area.getE_Pic_URL())
                 .apply(new RequestOptions().centerCrop())
@@ -74,19 +95,31 @@ public class AreaFragment extends Fragment implements AreaContract.View {
         location.setText(area.getE_Category());
         memo.setText(area.getE_Memo());
         web.setText(Html.fromHtml(String.format(getString(R.string.area_link), area.getE_URL())));
+    }
 
-        return root;
+    PlantItemListener mPlantItemListener = new PlantItemListener() {
+
+        @Override
+        public void onPlantClick(Plant.ResultBean.ResultsBean clickedPlant) {
+            mPresenter.openPlant(clickedPlant);
+        }
+    };
+
+    @Override
+    public void showPlants(List<Plant.ResultBean.ResultsBean> plants) {
+        mPlantAdapter.replaceData(plants);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start("");
-    }
-
-    @Override
-    public void showPlantUi() {
+    public void showPlantUi(Plant.ResultBean.ResultsBean clickedPlant) {
         Intent intent = new Intent(getContext(), PlantActivity.class);
+        intent.putExtra(OBJECT_PLANT, clickedPlant);
         startActivity(intent);
+    }
+
+    public interface PlantItemListener {
+
+        void onPlantClick(Plant.ResultBean.ResultsBean clickedPlant);
+
     }
 }

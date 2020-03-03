@@ -3,11 +3,14 @@ package com.james.zoo.plant;
 import android.os.Bundle;
 
 import com.james.zoo.R;
+import com.james.zoo.data.Plant;
 import com.james.zoo.util.ActivityUtils;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import static com.james.zoo.Constants.Constants.OBJECT_PLANT;
 
 public class PlantActivity extends AppCompatActivity {
 
@@ -18,9 +21,11 @@ public class PlantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.plant_act);
 
+        Plant.ResultBean.ResultsBean plant = getIntent().getParcelableExtra(OBJECT_PLANT);
+
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Plant");
+        toolbar.setTitle(plant.getF_Name_Ch());
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);

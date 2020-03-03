@@ -10,4 +10,5 @@ public final class Constants {
     public static final String API_QUERY_VALUE_PLANTS = "f18de02f-b6c9-47c0-8cda-50efad621c14";
 
     public static final String OBJECT_AREA = "OBJECT_AREA";
+    public static final String OBJECT_PLANT = "OBJECT_PLANT";
 }

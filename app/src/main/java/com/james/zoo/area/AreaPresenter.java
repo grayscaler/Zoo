@@ -1,5 +1,6 @@
 package com.james.zoo.area;
 
+import com.james.zoo.data.Area;
 import com.james.zoo.data.Plant;
 import com.james.zoo.data.source.ZooDataSource;
 import com.james.zoo.data.source.ZooRepository;
@@ -12,28 +13,27 @@ public class AreaPresenter implements AreaContract.Presenter {
 
     private final ZooRepository mZooRepository;
 
-    public AreaPresenter(AreaContract.View view, ZooRepository zooRepository) {
+    private final Area.ResultBean.ResultsBean mArea;
+
+    public AreaPresenter(AreaContract.View view, ZooRepository zooRepository, Area.ResultBean.ResultsBean area) {
         mView = view;
         mZooRepository = zooRepository;
+        mArea = area;
 
         mView.setPresenter(this);
     }
 
     @Override
     public void start() {
-
-    }
-
-    @Override
-    public void start(String area) {
-        loadPlants(area);
+        mView.setView(mArea);
+        loadPlants(mArea.getE_Name());
     }
 
     private void loadPlants(String area) {
         mZooRepository.getPlants(new ZooDataSource.GetPlantsCallback() {
             @Override
             public void onAreaLoaded(List<Plant.ResultBean.ResultsBean> plants) {
-
+                mView.showPlants(plants);
             }
 
             @Override
@@ -44,7 +44,7 @@ public class AreaPresenter implements AreaContract.Presenter {
     }
 
     @Override
-    public void openPlant() {
-        mView.showPlantUi();
+    public void openPlant(Plant.ResultBean.ResultsBean clickedPlant) {
+        mView.showPlantUi(clickedPlant);
     }
 }
