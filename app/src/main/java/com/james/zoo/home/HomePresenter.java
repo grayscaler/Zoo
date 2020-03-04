@@ -9,10 +9,9 @@ import java.util.List;
 public class HomePresenter implements HomeContract.Presenter {
 
     private final HomeContract.View mView;
-
     private final ZooRepository mZooRepository;
 
-    public HomePresenter(HomeContract.View view, ZooRepository zooRepository) {
+    HomePresenter(HomeContract.View view, ZooRepository zooRepository) {
         mView = view;
         mZooRepository = zooRepository;
 

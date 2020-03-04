@@ -158,7 +158,7 @@ public class Plant {
             private String F_Vedio_URL;
             private String F_Genus;
             @SerializedName("F_Function＆Application")
-            private String _$F_FunctionApplication295; // FIXME check this code
+            private String F_FunctionApplication;
             private String F_Voice03_URL;
             private String F_Update;
             private int _id;
@@ -198,7 +198,7 @@ public class Plant {
                 F_pdf01_URL = in.readString();
                 F_Vedio_URL = in.readString();
                 F_Genus = in.readString();
-                _$F_FunctionApplication295 = in.readString();
+                F_FunctionApplication = in.readString();
                 F_Voice03_URL = in.readString();
                 F_Update = in.readString();
                 _id = in.readInt();
@@ -488,12 +488,12 @@ public class Plant {
                 this.F_Genus = F_Genus;
             }
 
-            public String get_$F_FunctionApplication295() {
-                return _$F_FunctionApplication295;
+            public String getF_FunctionApplication() {
+                return F_FunctionApplication;
             }
 
-            public void set_$F_FunctionApplication295(String _$F_FunctionApplication295) {
-                this._$F_FunctionApplication295 = _$F_FunctionApplication295;
+            public void setF_FunctionApplication(String f_FunctionApplication) {
+                this.F_FunctionApplication = f_FunctionApplication;
             }
 
             public String getF_Voice03_URL() {
@@ -561,7 +561,7 @@ public class Plant {
                 parcel.writeString(F_pdf01_URL);
                 parcel.writeString(F_Vedio_URL);
                 parcel.writeString(F_Genus);
-                parcel.writeString(_$F_FunctionApplication295);
+                parcel.writeString(F_FunctionApplication);
                 parcel.writeString(F_Voice03_URL);
                 parcel.writeString(F_Update);
                 parcel.writeInt(_id);

@@ -16,7 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ZooRemoteDataSource {
 
     private static ZooRemoteDataSource INSTANCE;
-
     private ZooRemoteDataSourceApi mApi;
 
     public static ZooRemoteDataSource getInstance() {

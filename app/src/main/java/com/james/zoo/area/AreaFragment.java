@@ -1,5 +1,6 @@
 package com.james.zoo.area;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -31,6 +32,7 @@ import static com.james.zoo.Constants.Constants.OBJECT_PLANT;
 
 public class AreaFragment extends Fragment implements AreaContract.View {
 
+    private Context mContext;
     private AreaContract.Presenter mPresenter;
 
     private ImageView imageView;
@@ -54,6 +56,12 @@ public class AreaFragment extends Fragment implements AreaContract.View {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPlantAdapter = new PlantAdapter(new ArrayList<Plant.ResultBean.ResultsBean>(0), mPlantItemListener);
@@ -71,9 +79,9 @@ public class AreaFragment extends Fragment implements AreaContract.View {
         web = root.findViewById(R.id.web);
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(mPlantAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
 
         return root;
     }
@@ -97,7 +105,7 @@ public class AreaFragment extends Fragment implements AreaContract.View {
         web.setText(Html.fromHtml(String.format(getString(R.string.area_link), area.getE_URL())));
     }
 
-    PlantItemListener mPlantItemListener = new PlantItemListener() {
+    private PlantItemListener mPlantItemListener = new PlantItemListener() {
 
         @Override
         public void onPlantClick(Plant.ResultBean.ResultsBean clickedPlant) {
@@ -112,7 +120,7 @@ public class AreaFragment extends Fragment implements AreaContract.View {
 
     @Override
     public void showPlantUi(Plant.ResultBean.ResultsBean clickedPlant) {
-        Intent intent = new Intent(getContext(), PlantActivity.class);
+        Intent intent = new Intent(mContext, PlantActivity.class);
         intent.putExtra(OBJECT_PLANT, clickedPlant);
         startActivity(intent);
     }

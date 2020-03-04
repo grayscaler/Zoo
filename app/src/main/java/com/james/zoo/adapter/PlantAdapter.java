@@ -76,7 +76,7 @@ public class PlantAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         TextView mName;
         TextView mInfo;
 
-        public PlantViewHolder(View itemView) {
+        PlantViewHolder(View itemView) {
             super(itemView);
             mRoot = itemView.findViewById(R.id.root);
             mImage = itemView.findViewById(R.id.image);

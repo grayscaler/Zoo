@@ -25,7 +25,9 @@ public class PlantActivity extends AppCompatActivity {
 
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(plant.getF_Name_Ch());
+        if (plant != null) {
+            toolbar.setTitle(plant.getF_Name_Ch());
+        }
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);

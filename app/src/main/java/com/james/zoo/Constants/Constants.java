@@ -11,4 +11,6 @@ public final class Constants {
 
     public static final String OBJECT_AREA = "OBJECT_AREA";
     public static final String OBJECT_PLANT = "OBJECT_PLANT";
+
+    public static final int INITIAL_CAPACITY = 0;
 }

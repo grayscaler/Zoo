@@ -78,7 +78,7 @@ public class AreaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView mInfo;
         TextView mMemo;
 
-        public AreaViewHolder(View itemView) {
+        AreaViewHolder(View itemView) {
             super(itemView);
             mRoot = itemView.findViewById(R.id.root);
             mImage = itemView.findViewById(R.id.image);

@@ -21,7 +21,6 @@ import static com.james.zoo.Constants.Constants.API_QUERY_VALUE_RESOURCE_A_QUIRE
 public class ZooRepository implements ZooDataSource {
 
     private static ZooRepository INSTANCE = null;
-
     private final ZooRemoteDataSource mZooRemoteDataSource;
 
     private ZooRepository(ZooRemoteDataSource zooRemoteDataSource) {
@@ -41,8 +40,8 @@ public class ZooRepository implements ZooDataSource {
     }
 
     @Override
-    public void getPlants(GetPlantsCallback getPlantsCallback, String area) {
-        getPlantsFromRemoteSource(getPlantsCallback, area);
+    public void getPlants(String area, GetPlantsCallback getPlantsCallback) {
+        getPlantsFromRemoteSource(area, getPlantsCallback);
     }
 
     private void getAreasFromRemoteSource(final GetAreasCallback getAreasCallback) {
@@ -65,7 +64,7 @@ public class ZooRepository implements ZooDataSource {
                 });
     }
 
-    private void getPlantsFromRemoteSource(final GetPlantsCallback getPlantsCallback, String area) {
+    private void getPlantsFromRemoteSource(String area, final GetPlantsCallback getPlantsCallback) {
         Map<String, String> options = new HashMap<>();
         options.put(API_QUERY_KEY_SCOPE, API_QUERY_VALUE_RESOURCE_A_QUIRE);
         options.put(API_QUERY_KEY_RID, API_QUERY_VALUE_PLANTS);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Zoo</string>
+    <string name="app_name">台北市立動物園</string>
 
     <string name="area_link">&lt;a href=%s>在網頁開啟&lt;/a></string>
 </resources>

@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Zoo");
+        toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);

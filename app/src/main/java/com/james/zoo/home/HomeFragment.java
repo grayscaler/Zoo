@@ -1,5 +1,6 @@
 package com.james.zoo.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,12 +22,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.james.zoo.Constants.Constants.INITIAL_CAPACITY;
 import static com.james.zoo.Constants.Constants.OBJECT_AREA;
 
 public class HomeFragment extends Fragment implements HomeContract.View {
 
+    private Context mContext;
     private HomeContract.Presenter mPresenter;
-
     private AreaAdapter mAreaAdapter;
 
     public HomeFragment() {
@@ -42,9 +44,15 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAreaAdapter = new AreaAdapter(new ArrayList<Area.ResultBean.ResultsBean>(0), mAreaItemListener);
+        mAreaAdapter = new AreaAdapter(new ArrayList<Area.ResultBean.ResultsBean>(INITIAL_CAPACITY), mAreaItemListener);
     }
 
     @Nullable
@@ -53,9 +61,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         View root = inflater.inflate(R.layout.home_frag, container, false);
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(mAreaAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
 
         return root;
     }
@@ -66,7 +74,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mPresenter.start();
     }
 
-    AreaItemListener mAreaItemListener = new AreaItemListener() {
+    private AreaItemListener mAreaItemListener = new AreaItemListener() {
         @Override
         public void onAreaClick(Area.ResultBean.ResultsBean clickedArea) {
             mPresenter.openAreaDetail(clickedArea);
@@ -80,7 +88,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     @Override
     public void showAreaDetail(Area.ResultBean.ResultsBean clickedArea) {
-        Intent intent = new Intent(getContext(), AreaActivity.class);
+        Intent intent = new Intent(mContext, AreaActivity.class);
         intent.putExtra(OBJECT_AREA, clickedArea);
         startActivity(intent);
     }

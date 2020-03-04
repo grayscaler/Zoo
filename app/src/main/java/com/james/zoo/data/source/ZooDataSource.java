@@ -23,5 +23,5 @@ public interface ZooDataSource {
 
     void getAreas(GetAreasCallback getAreasCallback);
 
-    void getPlants(GetPlantsCallback getPlantsCallback, String area);
+    void getPlants(String area, GetPlantsCallback getPlantsCallback);
 }

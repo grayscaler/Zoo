@@ -10,9 +10,7 @@ import java.util.List;
 public class AreaPresenter implements AreaContract.Presenter {
 
     private final AreaContract.View mView;
-
     private final ZooRepository mZooRepository;
-
     private final Area.ResultBean.ResultsBean mArea;
 
     public AreaPresenter(AreaContract.View view, ZooRepository zooRepository, Area.ResultBean.ResultsBean area) {
@@ -30,7 +28,7 @@ public class AreaPresenter implements AreaContract.Presenter {
     }
 
     private void loadPlants(String area) {
-        mZooRepository.getPlants(new ZooDataSource.GetPlantsCallback() {
+        mZooRepository.getPlants(area, new ZooDataSource.GetPlantsCallback() {
             @Override
             public void onAreaLoaded(List<Plant.ResultBean.ResultsBean> plants) {
                 mView.showPlants(plants);
@@ -40,7 +38,7 @@ public class AreaPresenter implements AreaContract.Presenter {
             public void onDataNotAvailable(Throwable throwable) {
 
             }
-        }, area);
+        });
     }
 
     @Override
