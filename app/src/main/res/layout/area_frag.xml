@@ -15,7 +15,7 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll">
 
             <RelativeLayout
@@ -39,10 +39,12 @@
                     tools:text="位在熱帶雨林區的熱帶雨林室內館（穿山甲館），使用臺灣穿山甲為主要意象，不僅是外觀設計的主要視覺焦點，更同時結合節能減碳、太陽能光電、雨水回收系統以及節能空調設計，是一座符合生物多樣性概念的展館。以南美洲亞馬遜河流域環境為展示主軸，顯現熱帶雨林的生物多樣性特色與氛圍。藉由高層空間，融合水域、樹林、樹冠層的沉浸式複合生態系，以不同感官體驗雨林多樣的生物組成，了解保育雨林的重要性，進而支持參與雨林保育。" />
 
                 <RelativeLayout
+                    android:id="@+id/extra_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/info"
                     android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
                     android:paddingEnd="10dp">
 
                     <TextView
@@ -72,11 +74,17 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="5dp"
                         android:autoLink="web"
-                        android:text="在網頁開啟"
                         android:textSize="14sp"
-                        app:autoSizeTextType="uniform" />
+                        app:autoSizeTextType="uniform"
+                        tools:text="@string/area_link" />
 
                 </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/extra_info"
+                    android:background="#bbbbbb" />
 
             </RelativeLayout>
 
@@ -88,6 +96,8 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:clipToPadding="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/area_item" />
 
