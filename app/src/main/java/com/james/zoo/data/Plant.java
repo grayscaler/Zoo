@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.james.zoo.R;
+import com.james.zoo.data.annotation.Title;
 
 import java.util.List;
 
@@ -123,6 +125,22 @@ public class Plant {
              * _id : 1
              */
 
+            @Title(order = 1, title = R.string.plant_name_ch)
+            private String F_Name_Ch;
+            @Title(order = 2, title = R.string.plant_name_en)
+            private String F_Name_En;
+            @Title(order = 3, title = R.string.plant_also_know)
+            private String F_AlsoKnown;
+            @Title(order = 4, title = R.string.plant_brief)
+            private String F_Brief;
+            @Title(order = 5, title = R.string.plant_feature)
+            private String F_Feature;
+            @Title(order = 6, title = R.string.plant_function_application)
+            @SerializedName("F_Function＆Application")
+            private String F_FunctionApplication;
+            @Title(order = 7, title = R.string.plant_update)
+            private String F_Update;
+
             private String F_Name_Latin;
             private String F_pdf02_ALT;
             private String F_Location;
@@ -138,15 +156,10 @@ public class Plant {
             private String F_Geo;
             private String F_Pic03_URL;
             private String F_Voice01_ALT;
-            private String F_AlsoKnown;
             private String F_Voice02_ALT;
-            private String F_Name_Ch;
             private String F_Pic04_ALT;
-            private String F_Name_En;
-            private String F_Brief;
             private String F_Pic04_URL;
             private String F_Voice01_URL;
-            private String F_Feature;
             private String F_Pic02_ALT;
             private String F_Family;
             private String F_Voice03_ALT;
@@ -157,10 +170,7 @@ public class Plant {
             private String F_pdf01_URL;
             private String F_Vedio_URL;
             private String F_Genus;
-            @SerializedName("F_Function＆Application")
-            private String F_FunctionApplication;
             private String F_Voice03_URL;
-            private String F_Update;
             private int _id;
 
             protected ResultsBean(Parcel in) {

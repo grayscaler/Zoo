@@ -39,7 +39,7 @@ public class PlantActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), plantFragment, R.id.contentFrame);
         }
 
-        mPlantPresenter = new PlantPresenter(plantFragment);
+        mPlantPresenter = new PlantPresenter(plantFragment, plant);
     }
 
     @Override

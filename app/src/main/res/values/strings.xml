@@ -2,4 +2,13 @@
     <string name="app_name">台北市立動物園</string>
 
     <string name="area_link">&lt;a href=%s>在網頁開啟&lt;/a></string>
+
+    <!--Plant Title-->
+    <string name="plant_name_ch">中文名稱</string>
+    <string name="plant_name_en">英文名稱</string>
+    <string name="plant_also_know">別名</string>
+    <string name="plant_brief">簡介</string>
+    <string name="plant_feature">辨識方式</string>
+    <string name="plant_function_application">功能性</string>
+    <string name="plant_update">最後更新</string>
 </resources>

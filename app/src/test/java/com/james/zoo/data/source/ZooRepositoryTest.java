@@ -102,7 +102,7 @@ public class ZooRepositoryTest {
 
     @Test
     public void getPlantsFromRemoteSource() {
-        mZooRepository.getPlants(new ZooDataSource.GetPlantsCallback() {
+        mZooRepository.getPlants("臺灣動物區", new ZooDataSource.GetPlantsCallback() {
             @Override
             public void onAreaLoaded(List<Plant.ResultBean.ResultsBean> plants) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -113,6 +113,6 @@ public class ZooRepositoryTest {
             public void onDataNotAvailable(Throwable throwable) {
 
             }
-        }, "臺灣動物區");
+        });
     }
 }
