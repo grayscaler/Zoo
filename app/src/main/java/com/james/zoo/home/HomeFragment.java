@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import static com.james.zoo.Constants.Constants.INITIAL_CAPACITY;
 import static com.james.zoo.Constants.Constants.OBJECT_AREA;
@@ -65,6 +66,20 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         recyclerView.setAdapter(mAreaAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
 
+        // Set up progress indicator
+        final ScrollChildSwipeRefreshLayout swipeRefreshLayout =
+                (ScrollChildSwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
+
+        // Set the scrolling view in the custom SwipeRefreshLayout.
+        swipeRefreshLayout.setScrollUpChild(recyclerView);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadAreas(true);
+            }
+        });
+
         return root;
     }
 
@@ -72,6 +87,23 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     public void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    public void setLoadingIndicator(final boolean active) {
+
+        if (getView() == null) {
+            return;
+        }
+        final SwipeRefreshLayout srl = (SwipeRefreshLayout) getView().findViewById(R.id.refresh_layout);
+
+        // Make sure setRefreshing() is called after the layout is done with everything else.
+        srl.post(new Runnable() {
+            @Override
+            public void run() {
+                srl.setRefreshing(active);
+            }
+        });
     }
 
     private AreaItemListener mAreaItemListener = new AreaItemListener() {

@@ -10,10 +10,14 @@ public interface HomeContract {
 
     interface Presenter extends BasePresenter {
 
+        void loadAreas(boolean forceUpdate);
+
         void openAreaDetail(Area.ResultBean.ResultsBean clickedArea);
     }
 
     interface View extends BaseView<Presenter> {
+
+        void setLoadingIndicator(boolean active);
 
         void showAreas(List<Area.ResultBean.ResultsBean> areas);
 

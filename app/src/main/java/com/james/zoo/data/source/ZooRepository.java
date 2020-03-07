@@ -5,6 +5,8 @@ import com.james.zoo.data.Plant;
 import com.james.zoo.data.source.remote.ZooRemoteDataSource;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,6 +25,9 @@ public class ZooRepository implements ZooDataSource {
     private static ZooRepository INSTANCE = null;
     private final ZooRemoteDataSource mZooRemoteDataSource;
 
+    List<Area.ResultBean.ResultsBean> mCachedAreas;
+    boolean mCacheIsDirty = false;
+
     private ZooRepository(ZooRemoteDataSource zooRemoteDataSource) {
         mZooRemoteDataSource = zooRemoteDataSource;
     }
@@ -36,7 +41,16 @@ public class ZooRepository implements ZooDataSource {
 
     @Override
     public void getAreas(GetAreasCallback getAreasCallback) {
-        getAreasFromRemoteSource(getAreasCallback);
+        // Respond immediately with cache if available and not dirty
+        if (mCachedAreas != null && !mCacheIsDirty) {
+            getAreasCallback.onAreaLoaded(mCachedAreas);
+            return;
+        }
+
+        if (mCacheIsDirty) {
+            // If the cache is dirty we need to fetch new data from the network.
+            getAreasFromRemoteSource(getAreasCallback);
+        }
     }
 
     @Override
@@ -54,6 +68,7 @@ public class ZooRepository implements ZooDataSource {
                 .subscribe(new Consumer<Area>() {
                     @Override
                     public void accept(Area area) throws Exception {
+                        refreshCache(area.getResult().getResults());
                         getAreasCallback.onAreaLoaded(area.getResult().getResults());
                     }
                 }, new Consumer<Throwable>() {
@@ -62,6 +77,20 @@ public class ZooRepository implements ZooDataSource {
                         getAreasCallback.onDataNotAvailable(throwable);
                     }
                 });
+    }
+
+    public void refreshTasks() {
+        mCacheIsDirty = true;
+    }
+
+    private void refreshCache(List<Area.ResultBean.ResultsBean> areas) {
+        if (mCachedAreas == null) {
+            mCachedAreas = new LinkedList<>();
+        }
+        mCachedAreas.clear();
+        mCachedAreas.addAll(areas);
+
+        mCacheIsDirty = false;
     }
 
     private void getPlantsFromRemoteSource(String area, final GetPlantsCallback getPlantsCallback) {

@@ -11,6 +11,8 @@ public class HomePresenter implements HomeContract.Presenter {
     private final HomeContract.View mView;
     private final ZooRepository mZooRepository;
 
+    private boolean mFirstLoad = true;
+
     HomePresenter(HomeContract.View view, ZooRepository zooRepository) {
         mView = view;
         mZooRepository = zooRepository;
@@ -20,19 +22,28 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void start() {
-        loadAreas();
+        loadAreas(mFirstLoad);
+        mFirstLoad = false;
     }
 
-    private void loadAreas() {
+    @Override
+    public void loadAreas(boolean forceUpdate) {
+        mView.setLoadingIndicator(true);
+
+        if (forceUpdate) {
+            mZooRepository.refreshTasks();
+        }
+
         mZooRepository.getAreas(new ZooDataSource.GetAreasCallback() {
             @Override
             public void onAreaLoaded(List<Area.ResultBean.ResultsBean> areas) {
                 mView.showAreas(areas);
+                mView.setLoadingIndicator(false);
             }
 
             @Override
             public void onDataNotAvailable(Throwable throwable) {
-
+                mView.setLoadingIndicator(false);
             }
         });
     }
