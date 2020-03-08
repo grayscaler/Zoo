@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,6 +103,7 @@ public class AreaFragment extends Fragment implements AreaContract.View {
         info.setText(area.getE_Info());
         location.setText(area.getE_Category());
         memo.setText(area.getE_Memo());
+        web.setMovementMethod(LinkMovementMethod.getInstance());
         web.setText(Html.fromHtml(String.format(getString(R.string.area_link), area.getE_URL())));
     }
 
